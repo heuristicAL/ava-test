@@ -20,7 +20,7 @@ public class ViewLocator : IDataTemplate {
 
 	public record ViewLocationDescriptor(Type ViewModel, Func<Control> Factory);
 
-	public IControl Build(object param) => _dic[param.GetType()]();
+	public Control Build(object param) => _dic[param.GetType()]();
 
 	public bool Match(object data) => _dic.ContainsKey(data.GetType());
 }
