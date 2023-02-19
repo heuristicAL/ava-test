@@ -1,0 +1,13 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:AvaloniaApplication1"
+             xmlns:viewLocatorHelper="clr-namespace:AvaloniaApplication1.ViewLocatorHelper"
+             x:Class="AvaloniaApplication1.App">
+    <!-- <Application.DataTemplates> -->
+    <!--     <viewLocatorHelper:ViewLocator/> -->
+    <!-- </Application.DataTemplates> -->
+
+    <Application.Styles>
+        <FluentTheme Mode="Light"/>
+    </Application.Styles>
+</Application>
