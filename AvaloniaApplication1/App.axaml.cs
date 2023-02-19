@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
+using AvaloniaApplication1.Models;
 using AvaloniaApplication1.ViewModels;
 using AvaloniaApplication1.Views;
 
@@ -34,13 +35,10 @@ public partial class App : Application {
 			// .. and subscribe to its "Apply" button, which returns the dialog result
 			dialog.ViewModel!.ApplyCommand
 				/*.ObserveOn(RxApp.MainThreadScheduler).SubscribeOn(RxApp.MainThreadScheduler)*/
-				.Subscribe(result => {
+				.Subscribe(async result => {
+					await Init(result);
 					Console.WriteLine("dialog apply button hit!");
-					desktop.MainWindow = new MainWindow {
-						DataContext = new MainWindowViewModel(),
-
-						// DataContext = new MainWindowViewModel(result),
-					};
+					desktop.MainWindow = Container.GetRequiredService<MainWindow>();
 					desktop.MainWindow.Show();
 					dialog.Close();
 					Console.WriteLine("new main window instantiated!");
@@ -54,7 +52,7 @@ public partial class App : Application {
 		base.OnFrameworkInitializationCompleted();
 	}
 
-	private async Task Bootstrap() {
+	private async Task Init(LoginResult loginResult) {
 		host = Host.CreateDefaultBuilder()
 			.ConfigureServices((_, services) =>
 			{
