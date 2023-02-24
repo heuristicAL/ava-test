@@ -7,11 +7,10 @@ using ReactiveUI;
 namespace AvaloniaApplication1.ViewModels;
 
 public class LoginViewModel : ViewModelBase {
-	public ReactiveCommand<Unit, LoginResult> ApplyCommand { get; }
+  public ReactiveCommand<Unit, LoginResult> ApplyCommand { get; }
 
-	public LoginViewModel()
-	{
-		ApplyCommand = ReactiveCommand.Create(() => new LoginResult {Message = "apply!"});
-	}
+  public LoginViewModel() {
+    this.ApplyCommand = ReactiveCommand.Create(() => new LoginResult { Message = "apply!" });
+  }
 
 }
