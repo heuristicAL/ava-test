@@ -1,4 +1,5 @@
 using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 using Avalonia;
@@ -21,8 +22,8 @@ using Splat.Microsoft.Extensions.Logging;
 namespace AvaloniaApplication1;
 
 public partial class App : Application {
-	public IHost            host      { get; set; }
-	public IServiceProvider Container { get; private set; }
+	private IHost?           host;
+	public  IServiceProvider Container { get; private set; }
 
 
 	public override void Initialize() { AvaloniaXamlLoader.Load(this); }
@@ -34,9 +35,10 @@ public partial class App : Application {
 
 			// .. and subscribe to its "Apply" button, which returns the dialog result
 			dialog.ViewModel!.ApplyCommand
-				/*.ObserveOn(RxApp.MainThreadScheduler).SubscribeOn(RxApp.MainThreadScheduler)*/
+				.ObserveOn(RxApp.MainThreadScheduler).SubscribeOn(RxApp.MainThreadScheduler)
 				.Subscribe(async result => {
 					await Init(result);
+					desktop.ShutdownRequested += (sender, args) => host?.Dispose();
 					Console.WriteLine("dialog apply button hit!");
 					desktop.MainWindow = Container.GetRequiredService<MainWindow>();
 					desktop.MainWindow.Show();
